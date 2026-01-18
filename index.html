@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Günlük Uygulaması</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Üst Navigasyon -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-links">
+                <button class="nav-btn active" data-page="home">
+                    <img src="ikon/bg5.png" width="40" height="40" alt="ev ikonu"></span>
+                    ANA SAYFA
+                </button>
+                <button class="nav-btn" data-page="calendar">
+                    <img src="ikon/bg2.png" width"40" height="40" alt="liste ikonu"></span>
+                    LİSTE
+                </button>
+                <button class="nav-btn" data-page="stats">
+                  <img src="ikon/bg3.png" width="40" height="40" alt="grafik ikonu"></span>
+                    İSTATİSTİKLER
+                </button>
+            </div>
+            <button id="themeToggle" class="theme-btn">
+                <img id="themeIcon" src="" alt="tema" width="20" height="20">
+            </button>
+        </div>
+    </nav>
+
+ <!-- Boş Not Uyarı Modal -->
+<div id="emptyNoteModal" class="modal">
+    <div class="modal-content modal-confirm">
+       
+        <p class="confirm-text">Not boş kaydedilecek</p>
+        <div class="confirm-buttons">
+            <button id="confirmEmpty" class="btn-confirm-yes" width="30" height="30">EVET</button>
+            <button id="cancelEmpty" class="btn-confirm-no" width="30" height="30">HAYIR</button>
+        </div>
+    </div>
+</div>
+
+<!-- Görev Silme Modal -->
+<!-- Görev Silme Modal -->
+<div id="clearTasksModal" class="modal">
+    <div class="modal-content modal-delete">
+        <div class="modal-delete-icon"><img src="ikon/cop.png" width="45" height="45" alt=""></div>
+        <h3 class="modal-delete-title"><span id="taskCount">0</span> tamamlanmış görevi silmek istiyor musunuz?</h3>
+        <div class="modal-delete-buttons">
+            <button id="confirmClearTasks" class="btn-delete">SİL</button>
+            <button id="cancelClearTasks" class="btn-cancel">İPTAL</button>
+        </div>
+    </div>
+</div>
+
+    <!-- Ana İçerik -->
+    <main class="main-content">
+        <div class="container">
+            
+            <!-- ANA SAYFA - Not Kartları -->
+            <div id="homePage" class="page active">
+                <div id="emptyMessage" class="empty-message">
+                    <div class="empty-icon">➕</div>
+                    <p class="empty-text">Henüz notunuz yok</p>
+                    <p class="empty-subtext">Yeni not eklemek için + butonuna tıklayın</p>
+                </div>
+                <div id="cardsContainer" class="cards-grid"></div>
+            </div>
+
+            <!-- LİSTE SAYFASI - Görevler -->
+            <div id="listPage" class="page">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title">Günlük İş Akışı</h1>
+                        <p class="page-subtitle">Görevlerinizi aşağıdan yönetin ve düzenleyin</p>
+                    </div>
+                    <button id="addTaskBtn" class="btn-add-task">
+                        <span>➕</span>
+                        Yeni Görev
+                    </button>
+                </div>
+
+                <div id="tasksContainer" class="tasks-container">
+                    <div id="emptyTasks" class="empty-tasks">Henüz bir görev eklenmemiş...</div>
+                    <div id="tasksList" class="tasks-list"></div>
+                </div>
+
+                <div id="tasksFooter" class="tasks-footer">
+                    <div class="tasks-stats">
+                        <span>Toplam: <span id="totalTasks">0</span></span>
+                        <span class="completed-count">Tamamlanan: <span id="completedTasks">0</span></span>
+                    </div>
+                    <button id="clearCompletedBtn" class="btn-clear">
+                        Tamamlananları Temizle
+                    </button>
+                </div>
+            </div>
+
+           <!-- İSTATİSTİKLER SAYFASI -->
+<div id="statsPage" class="page">
+    <!-- Üst Başlık -->
+    <div class="stats-header-main">
+        <div class="stats-title-section">
+            <h1 class="stats-page-title" id="statsMonthYear">Ocak 2025</h1>
+            <p class="stats-subtitle"><span id="statsEventCount"></span>   </p>
+        </div>
+        <div class="stats-nav-buttons">
+            <button id="prevMonthBtn" class="stats-nav-btn">
+                <span>◀</span> Önceki
+            </button>
+            <button id="todayBtn" class="stats-today-btn">Bugün</button>
+            <button id="nextMonthBtn" class="stats-nav-btn">
+                Sonraki <span>▶</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Haftanın Günleri -->
+    <div class="calendar-weekdays">
+        <div class="weekday-label">Pzt</div>
+        <div class="weekday-label">Sal</div>
+        <div class="weekday-label">Çar</div>
+        <div class="weekday-label">Per</div>
+        <div class="weekday-label">Cum</div>
+        <div class="weekday-label weekend">Cmt</div>
+        <div class="weekday-label weekend">Paz</div>
+    </div>
+
+<div id="calendarGrid" class="calendar-grid-container"></div>
+    
+    <!-- 👇 KUTU SİSTEMİ EKLE -->
+     <div id="boxesContainer" class="boxes-container"></div>
+</div>
+
+<!-- İSTATİSTİKLER SAYFASI SONU -->
+
+    <!-- FAB Butonu (Sadece Ana Sayfada) -->
+    <button id="addBtn" class="fab">
+        <span class="fab-icon">➕</span>
+    </button>
+
+    <!-- Silme Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content modal-delete">
+            <div class="modal-delete-icon"><img src="ikon/cop.png" width="45" height="45" alt"></div>
+            <h3 class="modal-delete-title">Bu notu silmek istiyor musunuz?</h3>
+            <div class="modal-delete-buttons">
+                <button id="confirmDelete" class="btn-delete">SİL</button>
+                <button id="cancelDelete" class="btn-cancel">İPTAL</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Not Yazma Modal -->
+    <div id="writeModal" class="modal">
+        <div class="modal-content modal-write">
+            <div class="modal-header">
+                <input type="text" id="writeTitle" class="write-title" placeholder="Başlık ekle...">
+                <button id="closeModal" class="btn-close">✖</button>
+            </div>
+            <textarea id="writeTextarea" class="write-textarea" placeholder="Notunu buraya yazmaya başla..."></textarea>
+            <div class="modal-footer">
+                <div class="write-date">
+                    <span id="writeDate">Bugün, 00:00</span>
+                    <span class="status-dot"></span>
+                </div>
+                <button id="saveWrite" class="btn-save">KAYDET</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
