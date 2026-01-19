@@ -12,15 +12,15 @@
         <div class="nav-container">
             <div class="nav-links">
                 <button class="nav-btn active" data-page="home">
-                    <img src="ikon/bg5.png" width="40" height="40" alt="ev ikonu"></span>
+                    <img src="ikon/bg5.png" width="40" height="40" alt="ev ikonu">
                     ANA SAYFA
                 </button>
                 <button class="nav-btn" data-page="calendar">
-                    <img src="ikon/bg2.png" width"40" height="40" alt="liste ikonu"></span>
+                    <img src="ikon/bg2.png" width="40" height="40" alt="liste ikonu">
                     LİSTE
                 </button>
                 <button class="nav-btn" data-page="stats">
-                  <img src="ikon/bg3.png" width="40" height="40" alt="grafik ikonu"></span>
+                    <img src="ikon/bg3.png" width="40" height="40" alt="grafik ikonu">
                     İSTATİSTİKLER
                 </button>
             </div>
@@ -30,30 +30,32 @@
         </div>
     </nav>
 
- <!-- Boş Not Uyarı Modal -->
-<div id="emptyNoteModal" class="modal">
-    <div class="modal-content modal-confirm">
-       
-        <p class="confirm-text">Not boş kaydedilecek</p>
-        <div class="confirm-buttons">
-            <button id="confirmEmpty" class="btn-confirm-yes" width="30" height="30">EVET</button>
-            <button id="cancelEmpty" class="btn-confirm-no" width="30" height="30">HAYIR</button>
+    <!-- Boş Not Uyarı Modal -->
+    <div id="emptyNoteModal" class="modal">
+        <div class="modal-content modal-confirm">
+            <p class="confirm-text">Not boş kaydedilecek</p>
+            <div class="confirm-buttons">
+                <button id="confirmEmpty" class="btn-confirm-yes">EVET</button>
+                <button id="cancelEmpty" class="btn-confirm-no">HAYIR</button>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Görev Silme Modal -->
-<!-- Görev Silme Modal -->
-<div id="clearTasksModal" class="modal">
-    <div class="modal-content modal-delete">
-        <div class="modal-delete-icon"><img src="ikon/cop.png" width="45" height="45" alt=""></div>
-        <h3 class="modal-delete-title"><span id="taskCount">0</span> tamamlanmış görevi silmek istiyor musunuz?</h3>
-        <div class="modal-delete-buttons">
-            <button id="confirmClearTasks" class="btn-delete">SİL</button>
-            <button id="cancelClearTasks" class="btn-cancel">İPTAL</button>
+    <!-- Görev Silme Modal -->
+    <div id="clearTasksModal" class="modal">
+        <div class="modal-content modal-delete">
+            <div class="modal-delete-icon">
+                <img src="ikon/cop.png" width="45" height="45" alt="çöp kutusu ikonu">
+            </div>
+            <h3 class="modal-delete-title">
+                <span id="taskCount">0</span> tamamlanmış görevi silmek istiyor musunuz?
+            </h3>
+            <div class="modal-delete-buttons">
+                <button id="confirmClearTasks" class="btn-delete">SİL</button>
+                <button id="cancelClearTasks" class="btn-cancel">İPTAL</button>
+            </div>
         </div>
     </div>
-</div>
 
     <!-- Ana İçerik -->
     <main class="main-content">
@@ -98,43 +100,48 @@
                 </div>
             </div>
 
-           <!-- İSTATİSTİKLER SAYFASI -->
-<div id="statsPage" class="page">
-    <!-- Üst Başlık -->
-    <div class="stats-header-main">
-        <div class="stats-title-section">
-            <h1 class="stats-page-title" id="statsMonthYear">Ocak 2025</h1>
-            <p class="stats-subtitle"><span id="statsEventCount"></span>   </p>
+            <!-- İSTATİSTİKLER SAYFASI -->
+            <div id="statsPage" class="page">
+                <!-- Üst Başlık -->
+                <div class="stats-header-main">
+                    <div class="stats-title-section">
+                        <h1 class="stats-page-title" id="statsMonthYear">Ocak 2025</h1>
+                        <p class="stats-subtitle">
+                            <span id="statsEventCount"></span>
+                        </p>
+                    </div>
+                    <div class="stats-nav-buttons">
+                        <button id="prevMonthBtn" class="stats-nav-btn">
+                            <span>◀</span> Önceki
+                        </button>
+                        <button id="todayBtn" class="stats-today-btn">Bugün</button>
+                        <button id="nextMonthBtn" class="stats-nav-btn">
+                            Sonraki <span>▶</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Haftanın Günleri -->
+                <div class="calendar-weekdays">
+                    <div class="weekday-label">Pzt</div>
+                    <div class="weekday-label">Sal</div>
+                    <div class="weekday-label">Çar</div>
+                    <div class="weekday-label">Per</div>
+                    <div class="weekday-label">Cum</div>
+                    <div class="weekday-label weekend">Cmt</div>
+                    <div class="weekday-label weekend">Paz</div>
+                </div>
+
+                <!-- Takvim Grid -->
+                <div id="calendarGrid" class="calendar-grid-container"></div>
+                
+                <!-- Kutu Sistemi -->
+                <div id="boxesContainer" class="boxes-container"></div>
+            </div>
+            <!-- İSTATİSTİKLER SAYFASI SONU -->
+
         </div>
-        <div class="stats-nav-buttons">
-            <button id="prevMonthBtn" class="stats-nav-btn">
-                <span>◀</span> Önceki
-            </button>
-            <button id="todayBtn" class="stats-today-btn">Bugün</button>
-            <button id="nextMonthBtn" class="stats-nav-btn">
-                Sonraki <span>▶</span>
-            </button>
-        </div>
-    </div>
-
-    <!-- Haftanın Günleri -->
-    <div class="calendar-weekdays">
-        <div class="weekday-label">Pzt</div>
-        <div class="weekday-label">Sal</div>
-        <div class="weekday-label">Çar</div>
-        <div class="weekday-label">Per</div>
-        <div class="weekday-label">Cum</div>
-        <div class="weekday-label weekend">Cmt</div>
-        <div class="weekday-label weekend">Paz</div>
-    </div>
-
-<div id="calendarGrid" class="calendar-grid-container"></div>
-    
-    <!-- 👇 KUTU SİSTEMİ EKLE -->
-     <div id="boxesContainer" class="boxes-container"></div>
-</div>
-
-<!-- İSTATİSTİKLER SAYFASI SONU -->
+    </main>
 
     <!-- FAB Butonu (Sadece Ana Sayfada) -->
     <button id="addBtn" class="fab">
@@ -144,7 +151,9 @@
     <!-- Silme Modal -->
     <div id="deleteModal" class="modal">
         <div class="modal-content modal-delete">
-            <div class="modal-delete-icon"><img src="ikon/cop.png" width="45" height="45" alt"></div>
+            <div class="modal-delete-icon">
+                <img src="ikon/cop.png" width="45" height="45" alt="çöp kutusu ikonu">
+            </div>
             <h3 class="modal-delete-title">Bu notu silmek istiyor musunuz?</h3>
             <div class="modal-delete-buttons">
                 <button id="confirmDelete" class="btn-delete">SİL</button>

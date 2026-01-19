@@ -1093,15 +1093,38 @@ body.light-mode .day-tile.weekend .day-number {
 }
 
 /* Başka Ayın Günleri */
-.day-tile.other-month {
-    opacity: 0.2;
-    border: 1px dashed #374151;
+.box-item.box-other-month {
+    background: rgba(255, 255, 255, 0.01) !important;
+    border: 1px dashed rgba(255, 255, 255, 0.1) !important;
     pointer-events: none;
-    background: transparent;
+    opacity: 0.5;
 }
 
-body.light-mode .day-tile.other-month {
-    border-color: #d1d5db;
+body.light-mode .box-item.box-other-month {
+    background: rgba(0, 0, 0, 0.03) !important;
+    border: 1px dashed rgba(0, 0, 0, 0.15) !important;
+}
+
+.box-item.box-other-month .box-input {
+    opacity: 0.7;
+}
+
+.box-item.box-other-month .box-number {
+    opacity: 0.5;
+    color: #6b7280;
+}
+
+body.light-mode .box-item.box-other-month .box-number {
+    color: #9ca3af;
+}
+
+/* Önceki aydan gelen pozitif/negatif değerler için parlama azaltılmış */
+.box-item.box-other-month .box-input.positive {
+    text-shadow: 0 0 8px rgba(34, 197, 94, 0.4) !important;
+}
+
+.box-item.box-other-month .box-input.negative {
+    text-shadow: 0 0 8px rgba(239, 68, 68, 0.4) !important;
 }
 
 /* Alt İstatistikler */
@@ -1338,4 +1361,89 @@ body.light-mode .box-input {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
+}
+/* Mobilde kutu sayısını azaltmışsınız ama daha da optimize edilebilir */
+@media (max-width: 480px) {
+    .boxes-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.delete-btn {
+    z-index: 10;
+    pointer-events: auto;
+}
+
+/* Boş kart içeriği */
+.empty-card-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;                        
+    min-height: 150px;
+    opacity: 0.5;
+    text-align: center;
+    font-style: italic;
+    transform: translateY(-10px);
+}
+
+.empty-card-content p {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Boş kart ikonu */
+.empty-card-icon {
+    color: #ffffff !important; /* Beyaz - karanlık mod */
+    flex-shrink: 0;
+}
+
+body.light-mode .empty-card-icon {
+    color: #111827 !important; /* Siyah - aydınlık mod */
+}
+/* ========== BOŞ KART İKONU DÜZELTMESİ ========== */
+svg.empty-card-icon path {
+    fill: #ffffff !important;
+}
+
+body.light-mode svg.empty-card-icon path {
+    fill: #111827 !important;
+}
+/* ========== GÖREV İKONU DÜZELTMESİ ========== */
+.task-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+svg.task-icon-svg path {
+    fill: #9ca3af !important;
+}
+
+body.light-mode svg.task-icon-svg path {
+    fill: #6b7280 !important;
+}
+/* ========== BOŞ KUTU STİLİ ========== */
+.box-item.box-empty {
+    background: rgba(0, 0, 0, 0.3) !important;
+    border: 2px solid rgba(255, 255, 255, 0.02) !important;
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.3;
+}
+
+body.light-mode .box-item.box-empty {
+    background: rgba(0, 0, 0, 0.15) !important;
+    border: 2px solid rgba(0, 0, 0, 0.05) !important;
+    opacity: 0.4;
+}
+
+.box-item.box-empty:hover {
+    transform: none !important;
+    border-color: rgba(255, 255, 255, 0.02) !important;
+}
+
+body.light-mode .box-item.box-empty:hover {
+    border-color: rgba(0, 0, 0, 0.05) !important;
 }

@@ -58,27 +58,53 @@ let currentStatsMonth = new Date().getMonth();
 let selectedBoxId = null;
 let boxData = {};
 
+// ========== YARDIMCI FONKSİYONLAR ==========
+function closeModal(modal) {
+    modal.classList.remove('active');
+}
+
+function validateNumberInput(value) {
+    return /^[+-]?\d*$/.test(value);
+}
+
 // ========== LOCALSTORAGE FONKSİYONLARI ==========
 function loadCards() {
-    const savedCards = localStorage.getItem('gunlukKartlari');
-    if (savedCards) {
-        cards = JSON.parse(savedCards);
+    try {
+        const savedCards = localStorage.getItem('gunlukKartlari');
+        if (savedCards) {
+            cards = JSON.parse(savedCards);
+        }
+    } catch (error) {
+        console.error('Kartlar yüklenemedi:', error);
     }
 }
 
 function saveCards() {
-    localStorage.setItem('gunlukKartlari', JSON.stringify(cards));
+    try {
+        localStorage.setItem('gunlukKartlari', JSON.stringify(cards));
+    } catch (error) {
+        console.error('Kaydetme hatası:', error);
+        alert('Veriler kaydedilemedi!');
+    }
 }
 
 function loadTasks() {
-    const savedTasks = localStorage.getItem('gorevler');
-    if (savedTasks) {
-        tasks = JSON.parse(savedTasks);
+    try {
+        const savedTasks = localStorage.getItem('gorevler');
+        if (savedTasks) {
+            tasks = JSON.parse(savedTasks);
+        }
+    } catch (error) {
+        console.error('Görevler yüklenemedi:', error);
     }
 }
 
 function saveTasks() {
-    localStorage.setItem('gorevler', JSON.stringify(tasks));
+    try {
+        localStorage.setItem('gorevler', JSON.stringify(tasks));
+    } catch (error) {
+        console.error('Görevler kaydedilemedi:', error);
+    }
 }
 
 function loadCurrentPage() {
@@ -106,14 +132,22 @@ function saveTheme(theme) {
 }
 
 function loadBoxData() {
-    const saved = localStorage.getItem('boxData');
-    if (saved) {
-        boxData = JSON.parse(saved);
+    try {
+        const saved = localStorage.getItem('boxData');
+        if (saved) {
+            boxData = JSON.parse(saved);
+        }
+    } catch (error) {
+        console.error('Box verileri yüklenemedi:', error);
     }
 }
 
 function saveBoxData() {
-    localStorage.setItem('boxData', JSON.stringify(boxData));
+    try {
+        localStorage.setItem('boxData', JSON.stringify(boxData));
+    } catch (error) {
+        console.error('Box verileri kaydedilemedi:', error);
+    }
 }
 
 // ========== TARİH FONKSİYONU ==========
@@ -174,7 +208,12 @@ function renderCards() {
                 cardEl.innerHTML = `
                     <button class="delete-btn" data-id="${card.id}">SİL</button>
                     <div class="empty-card-content">
-                        <p>📝 Buraya tıklayarak not ekleyin</p>
+                        <p>
+                            <svg class="empty-card-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256">
+                                <path d="M227.32,73.37,182.63,28.69a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H216a8,8,0,0,0,0-16H115.32l112-112A16,16,0,0,0,227.32,73.37ZM92.69,208H48V163.31l88-88L180.69,120ZM192,108.69,147.32,64l24-24L216,84.69Z"></path>
+                            </svg> 
+                            Buraya tıklayarak not ekleyin
+                        </p>
                     </div>
                 `;
             } else {
@@ -298,7 +337,11 @@ function renderTasks() {
             taskEl.className = 'task-item';
             
             taskEl.innerHTML = `
-                <span class="task-icon">📌</span>
+                <span class="task-icon">
+                    <svg class="task-icon-svg" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256">
+                        <path d="M240,88.23a54.43,54.43,0,0,1-16,37L189.25,160a54.27,54.27,0,0,1-38.63,16h-.05A54.63,54.63,0,0,1,96,119.84a8,8,0,0,1,16,.45A38.62,38.62,0,0,0,150.58,160h0a38.39,38.39,0,0,0,27.31-11.31l34.75-34.75a38.63,38.63,0,0,0-54.63-54.63l-11,11A8,8,0,0,1,135.7,59l11-11A54.65,54.65,0,0,1,224,48,54.86,54.86,0,0,1,240,88.23ZM109,185.66l-11,11A38.41,38.41,0,0,1,70.6,208h0a38.63,38.63,0,0,1-27.29-65.94L78,107.31A38.63,38.63,0,0,1,144,135.71a8,8,0,0,0,16,.45A54.86,54.86,0,0,0,144,96a54.65,54.65,0,0,0-77.27,0L32,130.75A54.62,54.62,0,0,0,70.56,224h0a54.28,54.28,0,0,0,38.64-16l11-11A8,8,0,0,0,109,185.66Z"></path>
+                    </svg>
+                </span>
                 <div class="task-content">
                     <span class="task-label">GÖREV ${index + 1}</span>
                     <input 
@@ -402,11 +445,52 @@ function createBoxes() {
     boxesContainer.innerHTML = '';
     
     const daysInMonth = getDaysInMonth(currentStatsYear, currentStatsMonth);
+    const firstDayOfMonth = new Date(currentStatsYear, currentStatsMonth, 1).getDay();
+    const startOffset = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
     
+    // Önceki ayın bilgilerini al
+    const prevMonth = currentStatsMonth === 0 ? 11 : currentStatsMonth - 1;
+    const prevYear = currentStatsMonth === 0 ? currentStatsYear - 1 : currentStatsYear;
+    const daysInPrevMonth = getDaysInMonth(prevYear, prevMonth);
+    
+    // Önceki ayın günlerini ekle
+    for (let i = 0; i < startOffset; i++) {
+        const dayNum = daysInPrevMonth - startOffset + i + 1;
+        const prevMonthKey = `${prevYear}-${prevMonth}-${dayNum}`;
+        const savedValue = boxData[prevMonthKey] || '';
+        
+        const box = document.createElement('div');
+        box.className = 'box-item box-other-month';
+        
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'box-input';
+        input.value = savedValue;
+        input.readOnly = true;
+        
+        if (savedValue) {
+            if (savedValue.startsWith('-')) {
+                input.classList.add('negative');
+            } else if (savedValue.startsWith('+') || savedValue) {
+                input.classList.add('positive');
+            }
+        }
+        
+        const number = document.createElement('div');
+        number.className = 'box-number';
+        number.textContent = dayNum < 10 ? `0${dayNum}` : dayNum;
+        
+        box.appendChild(input);
+        box.appendChild(number);
+        boxesContainer.appendChild(box);
+    }
+    
+    // Gerçek günleri ekle
     for (let i = 1; i <= daysInMonth; i++) {
         const box = document.createElement('div');
         box.className = 'box-item';
         box.dataset.id = i;
+        box.dataset.dayIndex = startOffset + i - 1;
         
         const boxKey = `${currentStatsYear}-${currentStatsMonth}-${i}`;
         const savedValue = boxData[boxKey] || '';
@@ -429,9 +513,7 @@ function createBoxes() {
         
         input.addEventListener('input', (e) => {
             let value = e.target.value;
-            
             let cleaned = value.replace(/[^0-9+\-]/g, '');
-            
             let firstChar = cleaned.length > 0 ? cleaned[0] : '';
             let restChars = cleaned.slice(1);
             
@@ -465,7 +547,6 @@ function createBoxes() {
             } else {
                 box.classList.remove('has-value');
             }
-            
         });
         
         input.addEventListener('keydown', (e) => {
@@ -488,13 +569,12 @@ function createBoxes() {
     }
 }
 
-
 function selectBox(boxId) {
-    const allBoxes = document.querySelectorAll('.box-item');
+    const allBoxes = document.querySelectorAll('.box-item:not(.box-other-month)');
     allBoxes.forEach(box => box.classList.remove('selected'));
     
-    const selectedBox = boxesContainer.querySelector(`[data-id="${boxId}"]`);
-    if (selectedBox) {
+    const selectedBox = boxesContainer.querySelector(`.box-item[data-id="${boxId}"]`);
+    if (selectedBox && !selectedBox.classList.contains('box-other-month')) {
         selectedBox.classList.add('selected');
         selectedBoxId = boxId;
         
@@ -681,21 +761,6 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// ========== SAYFA YÜKLENME ==========
-window.addEventListener('DOMContentLoaded', () => {
-    loadTheme();
-    loadCards();
-    loadTasks();
-    renderTasks();
-    renderCards();
-    loadBoxData();
-    updateStatsMonthYear();
-    createBoxes();
-    
-    const lastPage = loadCurrentPage();
-    switchPage(lastPage);
-});
-
 confirmClearTasksBtn.addEventListener('click', () => {
     tasks = tasks.filter(t => !t.completed);
     saveTasks();
@@ -711,4 +776,19 @@ clearTasksModal.addEventListener('click', (e) => {
     if (e.target === clearTasksModal) {
         clearTasksModal.classList.remove('active');
     }
+});
+
+// ========== SAYFA YÜKLENME ==========
+window.addEventListener('DOMContentLoaded', () => {
+    loadTheme();
+    loadCards();
+    loadTasks();
+    renderTasks();
+    renderCards();
+    loadBoxData();
+    updateStatsMonthYear();
+    createBoxes();
+    
+    const lastPage = loadCurrentPage();
+    switchPage(lastPage);
 });
